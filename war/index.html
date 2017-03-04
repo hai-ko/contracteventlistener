@@ -75,159 +75,159 @@
 									<div class="form-group">
 										<label for="abi">ABI</label>
 										<textarea class="form-control" rows="5" id="abi">[
-               {
-                 "constant": false,
-                 "inputs": [
-                   {
-                     "name": "_poleID",
-                     "type": "bytes32"
-                   },
-                   {
-                     "name": "_wattPower",
-                     "type": "uint256"
-                   },
-                   {
-                     "name": "_secondsToRent",
-                     "type": "uint256"
-                   }
-                 ],
-                 "name": "start",
-                 "outputs": [],
-                 "payable": true,
-                 "type": "function"
-               },
-               {
-                 "constant": false,
-                 "inputs": [
-                   {
-                     "name": "_poleID",
-                     "type": "bytes32"
-                   },
-                   {
-                     "name": "measuredWatt",
-                     "type": "uint256"
-                   }
-                 ],
-                 "name": "stop",
-                 "outputs": [],
-                 "payable": false,
-                 "type": "function"
-               },
-               {
-                 "constant": false,
-                 "inputs": [
-                   {
-                     "name": "_id",
-                     "type": "bytes32"
-                   },
-                   {
-                     "name": "_deviceOwner",
-                     "type": "address"
-                   },
-                   {
-                     "name": "_meterProvider",
-                     "type": "address"
-                   },
-                   {
-                     "name": "_maxWattPower",
-                     "type": "uint256"
-                   },
-                   {
-                     "name": "_maxRentingTime",
-                     "type": "uint256"
-                   },
-                   {
-                     "name": "_priceProvider",
-                     "type": "uint256"
-                   }
-                 ],
-                 "name": "setUpChargingPole",
-                 "outputs": [],
-                 "payable": false,
-                 "type": "function"
-               },
-               {
-                 "inputs": [],
-                 "payable": false,
-                 "type": "constructor"
-               },
-               {
-                 "payable": false,
-                 "type": "fallback"
-               },
-               {
-                 "anonymous": false,
-                 "inputs": [
-                   {
-                     "indexed": true,
-                     "name": "poleID",
-                     "type": "bytes32"
-                   }
-                 ],
-                 "name": "LogPoleSetUp",
-                 "type": "event"
-               },
-               {
-                 "anonymous": false,
-                 "inputs": [
-                   {
-                     "indexed": true,
-                     "name": "poleID",
-                     "type": "bytes32"
-                   },
-                   {
-                     "indexed": false,
-                     "name": "controller",
-                     "type": "address"
-                   },
-                   {
-                     "indexed": false,
-                     "name": "wattPower",
-                     "type": "uint256"
-                   },
-                   {
-                     "indexed": false,
-                     "name": "hoursToRent",
-                     "type": "uint256"
-                   }
-                 ],
-                 "name": "LogRented",
-                 "type": "event"
-               },
-               {
-                 "anonymous": false,
-                 "inputs": [
-                   {
-                     "indexed": true,
-                     "name": "poleID",
-                     "type": "bytes32"
-                   },
-                   {
-                     "indexed": false,
-                     "name": "chargeAmount",
-                     "type": "uint256"
-                   },
-                   {
-                     "indexed": false,
-                     "name": "elapsedSeconds",
-                     "type": "uint256"
-                   },
-                   {
-                     "indexed": false,
-                     "name": "watt",
-                     "type": "uint256"
-                   },
-                   {
-                     "indexed": false,
-                     "name": "contractType",
-                     "type": "uint8"
-                   }
-                 ],
-                 "name": "LogReturned",
-                 "type": "event"
-               }
-              ]
-              </textarea>
+							               {
+							                 "constant": false,
+							                 "inputs": [
+							                   {
+							                     "name": "_poleID",
+							                     "type": "bytes32"
+							                   },
+							                   {
+							                     "name": "_wattPower",
+							                     "type": "uint256"
+							                   },
+							                   {
+							                     "name": "_secondsToRent",
+							                     "type": "uint256"
+							                   }
+							                 ],
+							                 "name": "start",
+							                 "outputs": [],
+							                 "payable": true,
+							                 "type": "function"
+							               },
+							               {
+							                 "constant": false,
+							                 "inputs": [
+							                   {
+							                     "name": "_poleID",
+							                     "type": "bytes32"
+							                   },
+							                   {
+							                     "name": "measuredWatt",
+							                     "type": "uint256"
+							                   }
+							                 ],
+							                 "name": "stop",
+							                 "outputs": [],
+							                 "payable": false,
+							                 "type": "function"
+							               },
+							               {
+							                 "constant": false,
+							                 "inputs": [
+							                   {
+							                     "name": "_id",
+							                     "type": "bytes32"
+							                   },
+							                   {
+							                     "name": "_deviceOwner",
+							                     "type": "address"
+							                   },
+							                   {
+							                     "name": "_meterProvider",
+							                     "type": "address"
+							                   },
+							                   {
+							                     "name": "_maxWattPower",
+							                     "type": "uint256"
+							                   },
+							                   {
+							                     "name": "_maxRentingTime",
+							                     "type": "uint256"
+							                   },
+							                   {
+							                     "name": "_priceProvider",
+							                     "type": "uint256"
+							                   }
+							                 ],
+							                 "name": "setUpChargingPole",
+							                 "outputs": [],
+							                 "payable": false,
+							                 "type": "function"
+							               },
+							               {
+							                 "inputs": [],
+							                 "payable": false,
+							                 "type": "constructor"
+							               },
+							               {
+							                 "payable": false,
+							                 "type": "fallback"
+							               },
+							               {
+							                 "anonymous": false,
+							                 "inputs": [
+							                   {
+							                     "indexed": true,
+							                     "name": "poleID",
+							                     "type": "bytes32"
+							                   }
+							                 ],
+							                 "name": "LogPoleSetUp",
+							                 "type": "event"
+							               },
+							               {
+							                 "anonymous": false,
+							                 "inputs": [
+							                   {
+							                     "indexed": true,
+							                     "name": "poleID",
+							                     "type": "bytes32"
+							                   },
+							                   {
+							                     "indexed": false,
+							                     "name": "controller",
+							                     "type": "address"
+							                   },
+							                   {
+							                     "indexed": false,
+							                     "name": "wattPower",
+							                     "type": "uint256"
+							                   },
+							                   {
+							                     "indexed": false,
+							                     "name": "hoursToRent",
+							                     "type": "uint256"
+							                   }
+							                 ],
+							                 "name": "LogRented",
+							                 "type": "event"
+							               },
+							               {
+							                 "anonymous": false,
+							                 "inputs": [
+							                   {
+							                     "indexed": true,
+							                     "name": "poleID",
+							                     "type": "bytes32"
+							                   },
+							                   {
+							                     "indexed": false,
+							                     "name": "chargeAmount",
+							                     "type": "uint256"
+							                   },
+							                   {
+							                     "indexed": false,
+							                     "name": "elapsedSeconds",
+							                     "type": "uint256"
+							                   },
+							                   {
+							                     "indexed": false,
+							                     "name": "watt",
+							                     "type": "uint256"
+							                   },
+							                   {
+							                     "indexed": false,
+							                     "name": "contractType",
+							                     "type": "uint8"
+							                   }
+							                 ],
+							                 "name": "LogReturned",
+							                 "type": "event"
+							               }
+							              ]
+							        	</textarea>
 									</div>
 
 									<a class="btn btn-default" href="#" role="button"
@@ -244,18 +244,14 @@
 											value="0x5c66d6305ebec1980f94b852c03fd752fba9a1ae">
 									</div>
 
-
-
 									<a class="btn btn-primary" href="#" role="button"
 										id="startWatching">Start watching</a>
 								</form>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
-
 		</div>
 		<div class="row">
 			<div class="col-md-12">
@@ -310,10 +306,8 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
-
 		</div>
 
 
@@ -323,20 +317,16 @@
 			
 				<small id="statusText"> Loaded most recent events. Watching
 					for new events... </small>
-
 			</div>
-			
 		</div>
 		
 		<div class="row">
 			<div class="col-md-12">
 				<div class="list-group" id="eventList"></div>
 			</div>
-
 		</div>
 	</div>
 	
-
 	<script src="js/main.js"></script>
 </body>
 </html>
