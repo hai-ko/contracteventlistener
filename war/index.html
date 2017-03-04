@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Share &amp; Charge Event Listener</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<style>
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50% !important;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+* {
+  border-radius: 0 !important ;
+}
+</style>
+
+
+</head>
+<body>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+	<script src="js/abi-decoder.js"></script>
+	<script src="js/Chart.bundle.min.js"></script>
+	
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Share &amp; Charge Event Listener</h2>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="panel-group" id="accordion" role="tablist"
+					aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingOne">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion"
+									href="#collapseSettings" aria-expanded="true"
+									aria-controls="collapseOne"> <span
+									class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+									Settings
+								</a>
+							</h4>
+						</div>
+						<div id="collapseSettings" class="panel-collapse collapse"
+							role="tabpanel" aria-labelledby="headingOne">
+							<div class="panel-body">
+								<form>
+									<div class="form-group">
+										<label for="abi">ABI</label>
+										<textarea class="form-control" rows="5" id="abi">[
+               {
+                 "constant": false,
+                 "inputs": [
+                   {
+                     "name": "_poleID",
+                     "type": "bytes32"
+                   },
+                   {
+                     "name": "_wattPower",
+                     "type": "uint256"
+                   },
+                   {
+                     "name": "_secondsToRent",
+                     "type": "uint256"
+                   }
+                 ],
+                 "name": "start",
+                 "outputs": [],
+                 "payable": true,
+                 "type": "function"
+               },
+               {
+                 "constant": false,
+                 "inputs": [
+                   {
+                     "name": "_poleID",
+                     "type": "bytes32"
+                   },
+                   {
+                     "name": "measuredWatt",
+                     "type": "uint256"
+                   }
+                 ],
+                 "name": "stop",
+                 "outputs": [],
+                 "payable": false,
+                 "type": "function"
+               },
+               {
+                 "constant": false,
+                 "inputs": [
+                   {
+                     "name": "_id",
+                     "type": "bytes32"
+                   },
+                   {
+                     "name": "_deviceOwner",
+                     "type": "address"
+                   },
+                   {
+                     "name": "_meterProvider",
+                     "type": "address"
+                   },
+                   {
+                     "name": "_maxWattPower",
+                     "type": "uint256"
+                   },
+                   {
+                     "name": "_maxRentingTime",
+                     "type": "uint256"
+                   },
+                   {
+                     "name": "_priceProvider",
+                     "type": "uint256"
+                   }
+                 ],
+                 "name": "setUpChargingPole",
+                 "outputs": [],
+                 "payable": false,
+                 "type": "function"
+               },
+               {
+                 "inputs": [],
+                 "payable": false,
+                 "type": "constructor"
+               },
+               {
+                 "payable": false,
+                 "type": "fallback"
+               },
+               {
+                 "anonymous": false,
+                 "inputs": [
+                   {
+                     "indexed": true,
+                     "name": "poleID",
+                     "type": "bytes32"
+                   }
+                 ],
+                 "name": "LogPoleSetUp",
+                 "type": "event"
+               },
+               {
+                 "anonymous": false,
+                 "inputs": [
+                   {
+                     "indexed": true,
+                     "name": "poleID",
+                     "type": "bytes32"
+                   },
+                   {
+                     "indexed": false,
+                     "name": "controller",
+                     "type": "address"
+                   },
+                   {
+                     "indexed": false,
+                     "name": "wattPower",
+                     "type": "uint256"
+                   },
+                   {
+                     "indexed": false,
+                     "name": "hoursToRent",
+                     "type": "uint256"
+                   }
+                 ],
+                 "name": "LogRented",
+                 "type": "event"
+               },
+               {
+                 "anonymous": false,
+                 "inputs": [
+                   {
+                     "indexed": true,
+                     "name": "poleID",
+                     "type": "bytes32"
+                   },
+                   {
+                     "indexed": false,
+                     "name": "chargeAmount",
+                     "type": "uint256"
+                   },
+                   {
+                     "indexed": false,
+                     "name": "elapsedSeconds",
+                     "type": "uint256"
+                   },
+                   {
+                     "indexed": false,
+                     "name": "watt",
+                     "type": "uint256"
+                   },
+                   {
+                     "indexed": false,
+                     "name": "contractType",
+                     "type": "uint8"
+                   }
+                 ],
+                 "name": "LogReturned",
+                 "type": "event"
+               }
+              ]
+              </textarea>
+									</div>
+
+									<a class="btn btn-default" href="#" role="button"
+										id="processABI">Load ABI</a>
+									<div>
+										<br> <label for="eventCheckboxes">Events</label>
+										<div id="eventCheckboxes"></div>
+									</div>
+
+									<div class="form-group">
+										<br> <label for="contractAddress">Contract
+											address</label> <input type="text" class="form-control"
+											id="contractAddress"
+											value="0x5c66d6305ebec1980f94b852c03fd752fba9a1ae">
+									</div>
+
+
+
+									<a class="btn btn-primary" href="#" role="button"
+										id="startWatching">Start watching</a>
+								</form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="panel-group" id="accordion" role="tablist"
+					aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingTwo">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion"
+									href="#collapseMailNotification" aria-expanded="true"
+									aria-controls="collapseTwo"> <span
+									class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Mail
+									notification
+								</a>
+							</h4>
+						</div>
+						<div id="collapseMailNotification" class="panel-collapse collapse"
+							role="tabpanel" aria-labelledby="headingTwo">
+							<div class="panel-body">
+								<form></form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+
+				<div class="panel-group" id="accordion" role="tablist"
+					aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingThree">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion"
+									href="#collapseStatistics" aria-expanded="true"
+									aria-controls="collapseThree"> <span
+									class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Statistics
+								</a>
+							</h4>
+						</div>
+						<div id="collapseStatistics" class="panel-collapse collapse"
+							role="tabpanel" aria-labelledby="headingThree">
+							<div class="panel-body">
+							<select id="chartSelector" class="form-control">
+							  
+							</select>
+							<canvas id="chart" width="100%" height="40"></canvas>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="row" style="margin-bottom: 10px;">
+			<div class="col-md-12" >
+				<div class="loader"></div>
+			
+				<small id="statusText"> Loaded most recent events. Watching
+					for new events... </small>
+
+			</div>
+			
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="list-group" id="eventList"></div>
+			</div>
+
+		</div>
+	</div>
+	
+
+	<script src="js/main.js"></script>
+</body>
+</html>
