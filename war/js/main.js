@@ -1,4 +1,4 @@
-var theABI, etherscanRequestPostfix, highestBlock, eventElementData, myLineChart, changedEvent, elementCounter, selectedEventID;
+var theABI, etherscanRequestPostfix, highestBlock, eventElementData, myLineChart, changedEvent, elementCounter, selectedEventID, contractAddress;
 
 init();
 
@@ -187,6 +187,7 @@ function createEtherscanRequestPrefix(fromBlock, toBlock) {
 function createEtherscanRequestPostfix() {
 	
 	var url = "&address=" + $('#contractAddress').val()
+	contractAddress = $('#contractAddress').val();
 	
 	var eventCounter = 0;
 	var checkedElement = $('.eventCheckbox:checked').toArray();
@@ -278,19 +279,31 @@ function registerForNotification() {
 		"mailAddress": $('#mailAddressToRegister').val(),
 		"highestBlock": highestBlock,
 		"abi": theABI,
-		"selectedEventID": selectedEventID 
+		"selectedEventID": selectedEventID,
+		"contractAddress": contractAddress
+		
 	};
 	
 	$.ajax({
 	    type: 'POST',
 	    url: 'http://1-dot-contracteventlistener.appspot.com/mailnotification',
 	    data: JSON.stringify (data),
-	    success: function(data) { alert('data: ' + data); },
+	    complete: registrationFinished,
 	    contentType: "application/json",
 	    dataType: 'json'
 	});
 	
 }
+
+function registrationFinished(jqXHR, textStatus) {
+	if(jqXHR.status === 200) {
+		$('#notificationBody').prepend('<div class="alert alert-success alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> <strong>Registration successfull</strong></div>');
+	} else {
+		$('#notificationBody').prepend('<div class="alert alert-danger alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> <strong>Registration failed</strong></div>');
+		
+	}
+}
+
 
 function init() {
 	$('#processABI').click(function() {

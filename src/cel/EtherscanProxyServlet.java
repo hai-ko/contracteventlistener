@@ -19,12 +19,9 @@ public class EtherscanProxyServlet extends HttpServlet {
 		urlString += checkAndCopyParameter("topic0",req);
 		urlString += "&topic0_1_opr=or";
 		urlString += "&topic0_2_opr=or";
-		
 		urlString += checkAndCopyParameter("topic1",req);
 		urlString += "&topic1_2_opr=or";
-		
 		urlString += checkAndCopyParameter("topic2",req);
-		
 		urlString += checkAndCopyParameter("topic3",req);
 		
 		
