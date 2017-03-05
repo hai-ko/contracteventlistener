@@ -1,4 +1,4 @@
-var theABI, etherscanRequestPostfix, highestBlock, eventElementData, myLineChart, changedEvent, elementCounter;
+var theABI, etherscanRequestPostfix, highestBlock, eventElementData, myLineChart, changedEvent, elementCounter, selectedEventID;
 
 init();
 
@@ -192,7 +192,7 @@ function createEtherscanRequestPostfix() {
 	var checkedElement = $('.eventCheckbox:checked').toArray();
 	for( checkedElementIndex in checkedElement) {
 		url += "&topic" + eventCounter + "=0x" + checkedElement[checkedElementIndex].id;
-		
+		selectedEventID = checkedElement[checkedElementIndex].id;
 		eventCounter++;
 		if(eventCounter>3) {
 			break;
@@ -272,6 +272,26 @@ function generateChart() {
 	} 
 }
 
+function registerForNotification() {
+	
+	var data = {
+		"mailAddress": $('#mailAddressToRegister').val(),
+		"highestBlock": highestBlock,
+		"abi": theABI,
+		"selectedEventID": selectedEventID 
+	};
+	
+	$.ajax({
+	    type: 'POST',
+	    url: 'http://1-dot-contracteventlistener.appspot.com/mailnotification',
+	    data: JSON.stringify (data),
+	    success: function(data) { alert('data: ' + data); },
+	    contentType: "application/json",
+	    dataType: 'json'
+	});
+	
+}
+
 function init() {
 	$('#processABI').click(function() {
 		abiDecoder.removeABI(abiDecoder.getABIs());
@@ -279,5 +299,6 @@ function init() {
 	});
 	$('#startWatching').click(startWatching);
 	$('#chartSelector').change(generateChart);
+	$('#notificationRegistrationBtn').click(registerForNotification);
 
 }
