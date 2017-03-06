@@ -39,14 +39,8 @@ public class WatchDataServlet extends HttpServlet {
 				
 		} catch (EntityNotFoundException e) {
 			// TODO Auto-generated catch block
-			log.severe(e.getMessage());
-			
-			
+			log.severe(e.getMessage());	
 		}
-				
-		
-		
-		
 	}
 
 }

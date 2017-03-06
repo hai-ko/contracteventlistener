@@ -28,9 +28,6 @@ import com.google.appengine.labs.repackaged.org.json.JSONObject;
 public class MailNotificationServlet extends HttpServlet { 
 	 private static final Logger log = Logger.getLogger(MailNotificationServlet.class.getName());
 	
-	
-	 
-	
 	public static String requestToString(HttpServletRequest request) {
 		StringBuffer jb = new StringBuffer();
 		  String line = null;
@@ -44,14 +41,9 @@ public class MailNotificationServlet extends HttpServlet {
 		  return jb.toString();
 	}
 	
-	
-	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String answer = "Registration successful";
 		String requestData = requestToString(request);
-		
-		
-		
 		
 		try {
 			JSONObject jsonObject = new JSONObject(requestData);
@@ -65,7 +57,6 @@ public class MailNotificationServlet extends HttpServlet {
 			registration.setProperty("abi", new Text(jsonObject.getString("abi")));
 			registration.setProperty("selectedEventID", jsonObject.getString("selectedEventID"));
 			registration.setProperty("contractAddress", jsonObject.getString("contractAddress"));
-			
 
 			datastore.put(registration);
 		    
@@ -76,13 +67,11 @@ public class MailNotificationServlet extends HttpServlet {
 		    
 		  }
 		
-		
 		try {
 			response.getWriter().print(answer);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			log.severe(e.getMessage());
 		}
-
 	}
 }

@@ -216,6 +216,7 @@ function generateChart() {
 }
 
 function registerForNotification() {
+	$('#mailLoader').show();
 	
 	var data = {
 		"mailAddress": $('#mailAddressToRegister').val(),
@@ -238,6 +239,7 @@ function registerForNotification() {
 }
 
 function registrationFinished(jqXHR, textStatus) {
+	$('#mailLoader').hide();
 	if(jqXHR.status === 200) {
 		$('#notificationBody').prepend('<div class="alert alert-success alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> <strong>Registration successfull</strong></div>');
 	} else {
@@ -268,6 +270,7 @@ function init() {
 		processABI();
 	});
 	$('#startWatching').click(function () {
+		$('#collapseSettings').collapse('hide');
 		startWatching(3000000);
 	});
 	$('#chartSelector').change(generateChart);

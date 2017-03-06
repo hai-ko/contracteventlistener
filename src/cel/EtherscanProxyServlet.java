@@ -12,18 +12,17 @@ import javax.servlet.http.*;
 public class EtherscanProxyServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
-		String urlString = "https://api.etherscan.io/api?module=logs&action=getLogs";
-		urlString += checkAndCopyParameter("fromBlock",req);
-		urlString += checkAndCopyParameter("toBlock",req);
-		urlString += checkAndCopyParameter("address",req);
-		urlString += checkAndCopyParameter("topic0",req);
-		urlString += "&topic0_1_opr=or";
-		urlString += "&topic0_2_opr=or";
-		urlString += checkAndCopyParameter("topic1",req);
-		urlString += "&topic1_2_opr=or";
-		urlString += checkAndCopyParameter("topic2",req);
-		urlString += checkAndCopyParameter("topic3",req);
-		
+		String urlString = "https://api.etherscan.io/api?module=logs&action=getLogs"
+			+ checkAndCopyParameter("fromBlock",req)
+			+ checkAndCopyParameter("toBlock",req)
+			+ checkAndCopyParameter("address",req)
+			+ checkAndCopyParameter("topic0",req)
+			+ "&topic0_1_opr=or"
+			+ "&topic0_2_opr=or"
+			+ checkAndCopyParameter("topic1",req)
+			+ "&topic1_2_opr=or"
+			+ checkAndCopyParameter("topic2",req)
+			+ checkAndCopyParameter("topic3",req);
 		
 		URL url = new URL(urlString);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -34,7 +33,6 @@ public class EtherscanProxyServlet extends HttpServlet {
 		resp.setContentLength(conn.getContentLength());
 	
 		EtherscanProxyServlet.streamInputToOutput(conn.getInputStream(), resp.getOutputStream());
-		
 		
 	}
 	
@@ -58,6 +56,5 @@ public class EtherscanProxyServlet extends HttpServlet {
 		}
 		
 	}
-	
-	
+
 }
