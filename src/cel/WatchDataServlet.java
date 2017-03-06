@@ -25,13 +25,13 @@ public class WatchDataServlet extends HttpServlet {
 		try {
 			entity = datastore.get(KeyFactory.stringToKey(req.getParameter("watchID")));
 		
-			String responseJSON = " { highestBlock: "
-					+ entity.getProperty("highestBlock").toString()
-					+ ", contractAddress: "
+			String responseJSON = "{ \"highestBlock\": "
+					+ "\""+entity.getProperty("highestBlock").toString()
+					+ "\", \"contractAddress\": \""
 					+ entity.getProperty("contractAddress").toString()
-					+ ", selectedEventID: "
-					+ "0x" + entity.getProperty("selectedEventID").toString()
-					+ ", abi: "
+					+ "\", \"selectedEventID\": \""
+				    + entity.getProperty("selectedEventID").toString()
+					+ "\", \"abi\":"
 					+ ((Text) entity.getProperty("abi")).getValue()
 					+ "}";
 			resp.setContentType("text/plain");
@@ -40,6 +40,7 @@ public class WatchDataServlet extends HttpServlet {
 		} catch (EntityNotFoundException e) {
 			// TODO Auto-generated catch block
 			log.severe(e.getMessage());
+			
 			
 		}
 				

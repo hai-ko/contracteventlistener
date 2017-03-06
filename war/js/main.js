@@ -12,10 +12,11 @@ if(watchID === undefined) {
 } else {
 	var url = "http://1-dot-contracteventlistener.appspot.com/watchdata?watchID=" + watchID; 
 	//$.getJSON(url, loadWatchEntity).fail(function(jqXHR, textStatus, errorThrown) { console.log('getJSON request failed! ' + textStatus); });
+	
+	
 	$.ajax({
 		url: url,
-		type: "GET",
-		dataType: "JSONP"
+		type: "GET",	
 	})
 	.done(loadWatchEntity)
 	.fail(function(jqxhr, textStatus, error){
@@ -46,11 +47,16 @@ function sendRequest(fromBlock, toBlock) {
 	
 }
 
-function loadWatchEntity(data) {
-	$("#"+data.selectedEventID).prop("checked", true)
+function loadWatchEntity(dataInput) {
+	
+	var data = JSON.parse(dataInput);
+	
 	$('#contractAddress').val(data.contractAddress);
-	$("#abi").val(data.abi);
-	processABI();
+	$("#abi").val(JSON.stringify(data.abi));
+	theABI = data.abi;
+	abiDecoder.addABI(theABI);
+	listEventsFromABI(abiDecoder.getMethodIDs());
+	$("#"+data.selectedEventID).prop("checked", true);
 	startWatching(data.highestBlock);
 	setInterval(myTimer, 20000);
 	
