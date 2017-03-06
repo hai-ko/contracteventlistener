@@ -20,7 +20,6 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Text;
-import com.google.appengine.labs.repackaged.org.json.HTTP;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
@@ -30,19 +29,7 @@ public class MailNotificationServlet extends HttpServlet {
 	 private static final Logger log = Logger.getLogger(MailNotificationServlet.class.getName());
 	
 	
-	 public void sendMail(String subject, String text, String to) throws UnsupportedEncodingException, MessagingException {
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
-
-		Message msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress("noreply@contracteventlistener.appspotmail.com", "Admin"));
-		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to, ""));
-		msg.setSubject(subject);
-		msg.setText(text);
-		Transport.send(msg);
-		
-		
-	}
+	 
 	
 	public static String requestToString(HttpServletRequest request) {
 		StringBuffer jb = new StringBuffer();
@@ -64,12 +51,7 @@ public class MailNotificationServlet extends HttpServlet {
 		String requestData = requestToString(request);
 		
 		
-		/*try {
-			sendMail("Registration", requestData, "mmhr@gmx.de");
-		} catch (UnsupportedEncodingException | MessagingException e1) {
-			// TODO Auto-generated catch block
-			log.severe(e1.getMessage());
-		}*/
+		
 		
 		try {
 			JSONObject jsonObject = new JSONObject(requestData);
@@ -81,8 +63,8 @@ public class MailNotificationServlet extends HttpServlet {
 			registration.setProperty("mailAddress", jsonObject.getString("mailAddress"));
 			registration.setProperty("highestBlock", jsonObject.getString("highestBlock"));
 			registration.setProperty("abi", new Text(jsonObject.getString("abi")));
-			registration.setProperty("selectedEventID", new Text(jsonObject.getString("selectedEventID")));
-			registration.setProperty("contractAddress", new Text(jsonObject.getString("contractAddress")));
+			registration.setProperty("selectedEventID", jsonObject.getString("selectedEventID"));
+			registration.setProperty("contractAddress", jsonObject.getString("contractAddress"));
 			
 
 			datastore.put(registration);
@@ -93,7 +75,6 @@ public class MailNotificationServlet extends HttpServlet {
 			  log.severe(e.getMessage());
 		    
 		  }
-	
 		
 		
 		try {
@@ -102,8 +83,6 @@ public class MailNotificationServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			log.severe(e.getMessage());
 		}
-
-		
 
 	}
 }

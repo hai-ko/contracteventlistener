@@ -3,6 +3,6 @@
   <cron>
     <url>/eventwatcher</url>
     <description>check for new events</description>
-    <schedule>every 1 minutes</schedule>
+    <schedule>every 2 minutes</schedule>
   </cron>
 </cronentries>
