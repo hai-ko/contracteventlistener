@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import javax.mail.Message;
@@ -39,7 +40,11 @@ public class EventWatcherServlet extends HttpServlet {
 		for(Entity entity : results) {
 			if(!entity.getProperty("mailAddress").toString().equals("none")) {
 				generateEtherscanRequest(entity, datastore);
-		
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					log.severe(e.getMessage());
+				}
 			}
 		}
 		
@@ -48,10 +53,10 @@ public class EventWatcherServlet extends HttpServlet {
 	
 	public void generateEtherscanRequest(Entity entity, DatastoreService ds) {
 		String urlString = "https://api.etherscan.io/api?module=logs&action=getLogs"
-		+ "&fromBlock=" +  entity.getProperty("highestBlock").toString()
-		+ "&toBlock=latest"
-		+ "&address=" + entity.getProperty("contractAddress").toString()
-		+ "&topic0=" + "0x" + entity.getProperty("selectedEventID").toString();
+			+ "&fromBlock=" +  entity.getProperty("highestBlock").toString()
+			+ "&toBlock=latest"
+			+ "&address=" + entity.getProperty("contractAddress").toString()
+			+ "&topic0=" + "0x" + entity.getProperty("selectedEventID").toString();
 		
 		URL url;
 		try {
@@ -62,36 +67,32 @@ public class EventWatcherServlet extends HttpServlet {
 			conn.setRequestMethod("GET");
 			
 			String result = streamToString(conn.getInputStream());
-			
 			JSONObject jsonObject = new JSONObject(result);
 			if(jsonObject.getJSONArray("result").length() != 0) {
+				String mailText = "Click the following link to see all events occured after your registration "
+					+ "http://1-dot-contracteventlistener.appspot.com?watchID=" + KeyFactory.keyToString(entity.getKey());
 				
-				sendMail("Registration", "http://1-dot-contracteventlistener.appspot.com?watchID=" + KeyFactory.keyToString(entity.getKey()), entity.getProperty("mailAddress").toString());
+				sendMail("New event occured", mailText, entity.getProperty("mailAddress").toString());
 			
 				entity.setProperty("mailAddress", "none");
 				ds.put(entity);
 			}
 			
-			
 		} catch (MessagingException | IOException | JSONException e) {
 			log.severe(e.getMessage());
 		}
 	
-		
 	}
 	
 	public void sendMail(String subject, String text, String to) throws UnsupportedEncodingException, MessagingException {
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
-
 		Message msg = new MimeMessage(session);
-		msg.setFrom(new InternetAddress("noreply@contracteventlistener.appspotmail.com", "Admin"));
+		msg.setFrom(new InternetAddress("noreply@contracteventlistener.appspotmail.com", "Contract Event Listener"));
 		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to, ""));
 		msg.setSubject(subject);
 		msg.setText(text);
 		Transport.send(msg);
-		
-		
 	}
 	
 	public static String streamToString(java.io.InputStream is) {

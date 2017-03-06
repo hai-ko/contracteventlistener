@@ -25,8 +25,6 @@ if(watchID === undefined) {
 	});
 }
 
-
-
 function startWatching(startBlock) {
 	changedEvent = true;
 	elementCounter = 0;
@@ -269,7 +267,9 @@ function init() {
 		abiDecoder.removeABI(abiDecoder.getABIs());
 		processABI();
 	});
-	$('#startWatching').click(startWatching);
+	$('#startWatching').click(function () {
+		startWatching(3000000);
+	});
 	$('#chartSelector').change(generateChart);
 	$('#notificationRegistrationBtn').click(registerForNotification);
 
